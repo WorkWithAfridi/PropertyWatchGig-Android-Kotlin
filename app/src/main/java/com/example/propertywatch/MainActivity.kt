@@ -8,11 +8,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         //Creates a listFragment var, to pass in conditions using arguments
-        var listFragment = listFragment()
-
-
+        var listFragment = propertyListFragment()
 
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()

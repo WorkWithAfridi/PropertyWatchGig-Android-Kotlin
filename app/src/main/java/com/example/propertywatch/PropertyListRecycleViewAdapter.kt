@@ -1,16 +1,16 @@
 package com.example.propertywatch
 
-import android.content.Context
 import android.content.Intent
-import android.text.TextUtils
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
+import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.propertywatch.data.Property
+import com.example.propertywatch.database.Property
+
 
 class PropertyListRecycleViewAdapter(var inflaterr: LayoutInflater, var propertyList: ArrayList<Property>, val listener: OnItemClickListener) : RecyclerView.Adapter<PropertyListRecycleViewAdapter.ViewHolder>() {
 
@@ -32,7 +32,22 @@ class PropertyListRecycleViewAdapter(var inflaterr: LayoutInflater, var property
         position: Int
     ) {
         holder.properyAddressTextViewInViewHolder.text=propertyList.get(position).address;
-        holder.properyPriceTextViewInViewHolder.text="$"+propertyList.get(position).price.toString()
+        holder.properyPriceTextViewInViewHolder.text="Price: $"+propertyList.get(position).price.toString()
+        holder.propertyPhoneTextViewViewHolder.text="Phone: "+propertyList.get(position).phone.toString()
+        holder.emailButton.setOnClickListener(){
+            val selectedProperty = propertyList[position];
+
+            val intent = Intent(Intent.ACTION_SEND)
+            val recipients = arrayOf("friend@mail.com")
+
+            intent.putExtra(Intent.EXTRA_EMAIL, recipients)
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Investment Property Advice")
+            intent.putExtra(Intent.EXTRA_TEXT, "I would like to recommend this property at ${selectedProperty.address} listed for ${selectedProperty.price}")
+            intent.putExtra(Intent.EXTRA_CC, "mailcc@gmail.com")
+            intent.type = "text/html"
+            intent.setPackage("com.google.android.gm")
+            startActivity(inflaterr.context, intent, Bundle.EMPTY)
+        }
     }
 
 
@@ -44,6 +59,8 @@ class PropertyListRecycleViewAdapter(var inflaterr: LayoutInflater, var property
     View.OnClickListener{
         val properyAddressTextViewInViewHolder: TextView = itemView.findViewById(R.id.propertyNameTextView)
         val properyPriceTextViewInViewHolder: TextView = itemView.findViewById(R.id.propertyPriceTextView)
+        val propertyPhoneTextViewViewHolder: TextView = itemView.findViewById(R.id.propertyPhoneTextView)
+        val emailButton: Button = itemView.findViewById(R.id.emailButton)
 
         init {
             itemView.setOnClickListener(this)
@@ -59,30 +76,5 @@ class PropertyListRecycleViewAdapter(var inflaterr: LayoutInflater, var property
 
     interface OnItemClickListener{
         fun onItemClick(postion: Int);
-    }
-
-    // On send Email button click, this function is initiated
-    fun sendEmail(view: View) {
-//        var shelterName: EditText =findViewById(R.id.shelterName)
-//        val shelterEmail: EditText =findViewById(R.id.shelterEmail)
-//        //if the shelter name and the shelter email edittext is not empty, then initiate the if part, else go on with the else part.
-//        //after the variables are checked, the necessary datas are extracted and passed on to a new intent which opens ip the default mailing app and
-//        //fills the recipient, subject and body of the email and awaits for user confirmation.
-//        //after the user confirms and email is send to the shelter
-//        if(!TextUtils.isEmpty(shelterName.text.toString()) && !TextUtils.isEmpty(shelterEmail.text.toString()) ){
-//            val intent = Intent(Intent.ACTION_SEND)
-//            val recipients = arrayOf(shelterEmail.text.toString())
-//            intent.putExtra(Intent.EXTRA_EMAIL, recipients)
-//            intent.putExtra(Intent.EXTRA_SUBJECT, "Accommodation Request")
-//            var name = shelterName.text.toString()
-//            intent.putExtra(Intent.EXTRA_TEXT, "I would like to request accommodation for tonight at $name")
-//            intent.putExtra(Intent.EXTRA_CC, "mailcc@gmail.com")
-//            intent.type = "text/html"
-//            intent.setPackage("com.google.android.gm")
-//            startActivity(Intent.createChooser(intent, "Send mail"))
-//        }
-//        else{
-//            //continue //do Nothing
-//        }
     }
 }

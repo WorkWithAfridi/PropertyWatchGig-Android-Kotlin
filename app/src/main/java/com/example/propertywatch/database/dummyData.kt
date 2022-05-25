@@ -1,4 +1,4 @@
-import com.example.propertywatch.data.Property
+import com.example.propertywatch.database.Property
 
 fun loadData(): ArrayList<Property> {
     val propertyArray: ArrayList<Property> = ArrayList()

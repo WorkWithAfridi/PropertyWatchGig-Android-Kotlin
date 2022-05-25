@@ -2,7 +2,7 @@ package com.example.propertywatch
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.propertywatch.data.Property
+import com.example.propertywatch.database.Property
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -51,7 +51,7 @@ private lateinit var binding: ActivityMapsBinding
 
         // Add a marker in Sydney and move the camera
         val propertyLocation = LatLng(selectedProperty.lat, selectedProperty.lon)
-        mMap.addMarker(MarkerOptions().position(propertyLocation).title(selectedProperty.price.toString()))
+        mMap.addMarker(MarkerOptions().position(propertyLocation).title("$ ${selectedProperty.price.toString()}"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(propertyLocation, 12f))
     }
 }
