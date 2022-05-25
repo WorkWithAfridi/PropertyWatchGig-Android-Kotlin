@@ -38,7 +38,7 @@ class PropertyListRecycleViewAdapter(var inflaterr: LayoutInflater, var property
             val selectedProperty = propertyList[position];
 
             val intent = Intent(Intent.ACTION_SEND)
-            val recipients = arrayOf("friend@mail.com")
+            val recipients = arrayOf("ayon.tonmoy01@gmail.com")
 
             intent.putExtra(Intent.EXTRA_EMAIL, recipients)
             intent.putExtra(Intent.EXTRA_SUBJECT, "Investment Property Advice")
